@@ -6,6 +6,7 @@ import Services from "./pages/Services";
 import Portfolio from "./pages/Portfolio";
 import Contact from "./pages/Contact";
 import MeetingScheduler from "./pages/MeetingScheduler";
+import About from "./pages/About";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <main className="grow">
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
             <Route path="/services" element={<Services />} />
             <Route path="/portfolio" element={<Portfolio />} />
             <Route path="/contact" element={<Contact />} />
