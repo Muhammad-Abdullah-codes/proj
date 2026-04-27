@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { Mail, Phone, MapPin } from "lucide-react";
 
-// Custom SVG components to replace the removed Lucide brand icons
 const GithubIcon = ({ size = 20 }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -18,7 +17,6 @@ const GithubIcon = ({ size = 20 }) => (
     <path d="M9 18c-4.51 2-5-2-7-2" />
   </svg>
 );
-
 const TwitterIcon = ({ size = 20 }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -34,7 +32,6 @@ const TwitterIcon = ({ size = 20 }) => (
     <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />
   </svg>
 );
-
 const LinkedinIcon = ({ size = 20 }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -53,23 +50,25 @@ const LinkedinIcon = ({ size = 20 }) => (
   </svg>
 );
 
+// ... (keep the imports and SVG icons the same)
+
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-white dark:bg-gray-950 border-t border-gray-200 dark:border-gray-800 transition-colors duration-300">
-      <div className="max-w-7xl mx-auto px-6 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
-          {/* Brand Column */}
-          <div className="space-y-6">
-            <Link to="/" className="text-2xl font-bold tracking-tight">
-              Dev<span className="text-blue-600">Hub</span>.
+    <footer className="bg-white dark:bg-gray-950 border-t border-gray-200/80 dark:border-gray-800/80">
+      <div className="max-w-7xl mx-auto px-6 pt-24 pb-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 mb-16">
+          {/* Brand Column (Keep same) */}
+          <div className="lg:col-span-4 space-y-6">
+            <Link to="/" className="text-2xl font-extrabold tracking-tight">
+              Dev<span className="text-blue-600 dark:text-blue-500">Hub</span>.
             </Link>
-            <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-sm">
+            <p className="text-gray-500 dark:text-gray-400 leading-relaxed text-sm pr-4">
               Empowering businesses with next-generation software, AI solutions,
               and digital strategies that drive real growth.
             </p>
-            <div className="flex gap-4">
+            <div className="flex gap-5 pt-2">
               <a
                 href="#"
                 className="text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
@@ -94,8 +93,8 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Quick Links */}
-          <div>
+          {/* Company (Added Privacy and Terms here) */}
+          <div className="lg:col-span-2 lg:col-start-6">
             <h4 className="font-bold text-gray-900 dark:text-white mb-6">
               Company
             </h4>
@@ -103,7 +102,7 @@ export default function Footer() {
               <li>
                 <Link
                   to="/about"
-                  className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                  className="text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium"
                 >
                   About Us
                 </Link>
@@ -111,7 +110,7 @@ export default function Footer() {
               <li>
                 <Link
                   to="/portfolio"
-                  className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                  className="text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium"
                 >
                   Portfolio
                 </Link>
@@ -119,32 +118,40 @@ export default function Footer() {
               <li>
                 <Link
                   to="/careers"
-                  className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                  className="text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium"
                 >
                   Careers
                 </Link>
               </li>
               <li>
                 <Link
-                  to="/blog"
-                  className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                  to="/privacy"
+                  className="text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium"
                 >
-                  Insights & News
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/terms"
+                  className="text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium"
+                >
+                  Terms of Service
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Services */}
-          <div>
+          {/* Services (Keep same) */}
+          <div className="lg:col-span-2 text-sm">
             <h4 className="font-bold text-gray-900 dark:text-white mb-6">
               Services
             </h4>
-            <ul className="space-y-4 text-sm">
+            <ul className="space-y-4">
               <li>
                 <Link
                   to="/services"
-                  className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                  className="text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium"
                 >
                   Web Development
                 </Link>
@@ -152,7 +159,7 @@ export default function Footer() {
               <li>
                 <Link
                   to="/services"
-                  className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                  className="text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium"
                 >
                   AI & Automation
                 </Link>
@@ -160,7 +167,7 @@ export default function Footer() {
               <li>
                 <Link
                   to="/services"
-                  className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                  className="text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium"
                 >
                   SaaS Solutions
                 </Link>
@@ -168,53 +175,50 @@ export default function Footer() {
               <li>
                 <Link
                   to="/services"
-                  className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                  className="text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium"
                 >
-                  Digital Marketing
+                  Marketing
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Contact Info */}
-          <div>
+          {/* Contact (Keep same) */}
+          <div className="lg:col-span-3 text-sm">
             <h4 className="font-bold text-gray-900 dark:text-white mb-6">
               Contact
             </h4>
-            <ul className="space-y-4 text-sm">
-              <li className="flex items-start gap-3 text-gray-600 dark:text-gray-400">
-                <MapPin size={18} className="shrink-0 text-blue-600 mt-0.5" />
-                <span>123 Innovation Drive, Tech District, NY 10001</span>
+            <ul className="space-y-5">
+              <li className="flex items-start gap-3 text-gray-500 dark:text-gray-400">
+                <MapPin
+                  size={18}
+                  className="shrink-0 text-blue-600 dark:text-blue-500 mt-0.5"
+                />
+                <span className="font-medium leading-relaxed">
+                  123 Innovation Drive, Tech District, NY 10001
+                </span>
               </li>
-              <li className="flex items-center gap-3 text-gray-600 dark:text-gray-400">
-                <Phone size={18} className="shrink-0 text-blue-600" />
-                <span>+1 (555) 123-4567</span>
+              <li className="flex items-center gap-3 text-gray-500 dark:text-gray-400">
+                <Phone
+                  size={18}
+                  className="shrink-0 text-blue-600 dark:text-blue-500"
+                />
+                <span className="font-medium">+1 (555) 123-4567</span>
               </li>
-              <li className="flex items-center gap-3 text-gray-600 dark:text-gray-400">
-                <Mail size={18} className="shrink-0 text-blue-600" />
-                <span>hello@developershub.com</span>
+              <li className="flex items-center gap-3 text-gray-500 dark:text-gray-400">
+                <Mail
+                  size={18}
+                  className="shrink-0 text-blue-600 dark:text-blue-500"
+                />
+                <span className="font-medium">hello@developershub.com</span>
               </li>
             </ul>
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="pt-8 border-t border-gray-200 dark:border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
+        {/* Isolated Copyright Line */}
+        <div className="pt-8 border-t border-gray-100 dark:border-gray-800 text-center text-sm text-gray-400 dark:text-gray-500 font-medium">
           <p>© {currentYear} DevelopersHub Corporation. All rights reserved.</p>
-          <div className="flex gap-6">
-            <Link
-              to="/privacy"
-              className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-            >
-              Privacy Policy
-            </Link>
-            <Link
-              to="/terms"
-              className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-            >
-              Terms of Service
-            </Link>
-          </div>
         </div>
       </div>
     </footer>

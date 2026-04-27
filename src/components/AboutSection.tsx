@@ -1,8 +1,8 @@
 import { motion, type Variants } from "framer-motion";
-import { CheckCircle2, Users, Award, Zap } from "lucide-react";
+import { ArrowRight, Users, Zap } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function AboutSection() {
-  // Explicitly typing as 'Variants' to satisfy strict mode
   const fadeUpVariant: Variants = {
     hidden: { opacity: 0, y: 30 },
     visible: {
@@ -14,17 +14,15 @@ export default function AboutSection() {
 
   const staggerContainer: Variants = {
     hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.2 },
-    },
+    visible: { opacity: 1, transition: { staggerChildren: 0.15 } },
   };
 
   return (
-    <section className="py-24 bg-gray-50 dark:bg-gray-900/50 transition-colors duration-300">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          {/* Left Column: Text Content */}
+    // Added min-h-[calc(100vh-5rem)] and flex items-center to make it a perfect full-screen block
+    <section className="min-h-[calc(100vh-5rem)] flex items-center py-20 bg-gray-50 dark:bg-gray-900/30 border-t border-gray-100 dark:border-gray-900 transition-colors">
+      <div className="max-w-7xl mx-auto px-6 w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+          {/* Condensed Text Content */}
           <motion.div
             variants={staggerContainer}
             initial="hidden"
@@ -33,114 +31,73 @@ export default function AboutSection() {
           >
             <motion.h2
               variants={fadeUpVariant}
-              className="text-sm font-bold text-blue-600 dark:text-blue-400 tracking-wider uppercase mb-3"
+              className="text-sm font-extrabold text-blue-600 dark:text-blue-400 tracking-widest uppercase mb-4"
             >
-              About DevelopersHub
+              Who We Are
             </motion.h2>
             <motion.h3
               variants={fadeUpVariant}
-              className="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white mb-6 leading-tight"
+              className="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white mb-6 leading-tight"
             >
-              Engineering the future of your digital business.
+              Engineering the future of digital business.
             </motion.h3>
             <motion.p
               variants={fadeUpVariant}
               className="text-lg text-gray-600 dark:text-gray-300 mb-8 leading-relaxed"
             >
-              We are a team of passionate engineers, designers, and strategists
-              dedicated to delivering high-performance software. By combining
-              cutting-edge AI integrations with modern front-end architectures,
-              we build solutions that don't just look great—they drive
-              measurable growth.
+              We are a dedicated team of engineers and strategists. We don't
+              just build websites; we architect scalable solutions and AI
+              integrations that drive measurable growth for our partners.
             </motion.p>
 
-            <motion.ul variants={staggerContainer} className="space-y-4 mb-8">
-              {[
-                "Production-ready scalable architectures",
-                "Seamless AI & Automation integrations",
-                "Conversion-focused UI/UX design",
-                "24/7 technical support and maintenance",
-              ].map((item, index) => (
-                <motion.li
-                  key={index}
-                  variants={fadeUpVariant}
-                  className="flex items-center gap-3 text-gray-700 dark:text-gray-200 font-medium"
-                >
-                  <CheckCircle2 className="text-blue-500 shrink-0" size={20} />
-                  {item}
-                </motion.li>
-              ))}
-            </motion.ul>
+            <motion.div variants={fadeUpVariant}>
+              <Link
+                to="/about"
+                className="group inline-flex items-center gap-2 font-semibold text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors"
+              >
+                Learn more about our agency
+                <ArrowRight
+                  size={18}
+                  className="group-hover:translate-x-1 transition-transform"
+                />
+              </Link>
+            </motion.div>
           </motion.div>
 
-          {/* Right Column: Stats Grid */}
+          {/* Simplified Stats */}
           <motion.div
             variants={staggerContainer}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
-            className="grid grid-cols-2 gap-6"
+            className="grid grid-cols-2 gap-4 sm:gap-6"
           >
-            {/* Stat Box 1 */}
             <motion.div
               variants={fadeUpVariant}
-              className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md transition-shadow"
+              className="bg-white dark:bg-gray-800/80 p-8 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-800 flex flex-col items-center text-center"
             >
-              <div className="w-12 h-12 bg-blue-50 dark:bg-gray-700 rounded-xl flex items-center justify-center mb-4 text-blue-600 dark:text-blue-400">
-                <Users size={24} />
+              <div className="w-14 h-14 bg-blue-50 dark:bg-blue-900/30 rounded-2xl flex items-center justify-center mb-6 text-blue-600 dark:text-blue-400">
+                <Users size={28} />
               </div>
-              <h4 className="text-3xl font-bold text-gray-900 dark:text-white mb-1">
+              <h4 className="text-4xl font-black text-gray-900 dark:text-white mb-2">
                 250+
               </h4>
-              <p className="text-sm text-gray-500 dark:text-gray-400 font-medium">
+              <p className="text-gray-500 dark:text-gray-400 font-medium">
                 Happy Clients
               </p>
             </motion.div>
 
-            {/* Stat Box 2 */}
             <motion.div
               variants={fadeUpVariant}
-              className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md transition-shadow translate-y-0 md:translate-y-8"
+              className="bg-white dark:bg-gray-800/80 p-8 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-800 flex flex-col items-center text-center translate-y-0 lg:translate-y-8 mt-4 lg:mt-0"
             >
-              <div className="w-12 h-12 bg-cyan-50 dark:bg-gray-700 rounded-xl flex items-center justify-center mb-4 text-cyan-600 dark:text-cyan-400">
-                <Zap size={24} />
+              <div className="w-14 h-14 bg-cyan-50 dark:bg-cyan-900/30 rounded-2xl flex items-center justify-center mb-6 text-cyan-600 dark:text-cyan-400">
+                <Zap size={28} />
               </div>
-              <h4 className="text-3xl font-bold text-gray-900 dark:text-white mb-1">
-                99.9%
-              </h4>
-              <p className="text-sm text-gray-500 dark:text-gray-400 font-medium">
-                Uptime Delivered
-              </p>
-            </motion.div>
-
-            {/* Stat Box 3 */}
-            <motion.div
-              variants={fadeUpVariant}
-              className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md transition-shadow"
-            >
-              <div className="w-12 h-12 bg-indigo-50 dark:bg-gray-700 rounded-xl flex items-center justify-center mb-4 text-indigo-600 dark:text-indigo-400">
-                <Award size={24} />
-              </div>
-              <h4 className="text-3xl font-bold text-gray-900 dark:text-white mb-1">
-                15+
-              </h4>
-              <p className="text-sm text-gray-500 dark:text-gray-400 font-medium">
-                Industry Awards
-              </p>
-            </motion.div>
-
-            {/* Stat Box 4 */}
-            <motion.div
-              variants={fadeUpVariant}
-              className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md transition-shadow translate-y-0 md:translate-y-8"
-            >
-              <div className="w-12 h-12 bg-blue-50 dark:bg-gray-700 rounded-xl flex items-center justify-center mb-4 text-blue-600 dark:text-blue-400">
-                <CheckCircle2 size={24} />
-              </div>
-              <h4 className="text-3xl font-bold text-gray-900 dark:text-white mb-1">
+              <h4 className="text-4xl font-black text-gray-900 dark:text-white mb-2">
                 500+
               </h4>
-              <p className="text-sm text-gray-500 dark:text-gray-400 font-medium">
+              <p className="text-gray-500 dark:text-gray-400 font-medium">
                 Projects Shipped
               </p>
             </motion.div>
