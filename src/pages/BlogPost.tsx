@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ArrowLeft, Calendar, Clock, User, Share2 } from "lucide-react";
+import { ArrowLeft, Calendar, Clock, Share2 } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
 
 export default function BlogPost() {
@@ -60,7 +60,24 @@ export default function BlogPost() {
               <Clock size={16} /> 8 min read
             </div>
 
-            <button className="ml-auto flex items-center gap-2 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+            <button
+              onClick={() => {
+                if (navigator.share) {
+                  navigator
+                    .share({
+                      title: displayTitle,
+                      text: "Check out this engineering article from DevelopersHub:",
+                      url: window.location.href,
+                    })
+                    .catch(console.error);
+                } else {
+                  // Fallback for older browsers: just copy to clipboard
+                  navigator.clipboard.writeText(window.location.href);
+                  alert("Link copied to clipboard!");
+                }
+              }}
+              className="ml-auto flex items-center gap-2 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+            >
               <Share2 size={16} /> Share
             </button>
           </div>
