@@ -1,0 +1,4 @@
+@import "tailwindcss";
+
+/* This single line replaces the old darkMode: 'class' from the config file */
+@custom-variant dark (&:where(.dark, .dark *));
