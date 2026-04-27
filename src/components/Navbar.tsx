@@ -75,7 +75,7 @@ export default function Navbar() {
           </button>
 
           <Link
-            to="/contact"
+            to="/book"
             className="bg-blue-600 text-white px-6 py-2.5 rounded-lg font-semibold hover:bg-blue-700 hover:shadow-lg hover:shadow-blue-500/25 transition-all active:scale-95"
           >
             Book Meeting
@@ -131,7 +131,7 @@ export default function Navbar() {
               </Link>
               <div className="pt-6 mt-4 border-t border-gray-100 dark:border-gray-800">
                 <Link
-                  to="/contact"
+                  to="/book"
                   onClick={() => setIsOpen(false)}
                   className="block w-full bg-blue-600 text-white px-5 py-4 rounded-xl font-semibold text-center shadow-md active:scale-95 transition-all"
                 >
