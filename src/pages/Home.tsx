@@ -27,7 +27,7 @@ export default function Home() {
       {/* 100vh exact fit minus navbar height */}
       <section className="relative min-h-[calc(100vh-5rem)] mt-20 flex items-center justify-center overflow-hidden bg-white dark:bg-gray-950 px-6 py-12">
         {/* Optimized Glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[800px] h-[400px] bg-blue-500/15 dark:bg-blue-600/15 blur-[120px] rounded-full pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-200 h-100 bg-blue-500/15 dark:bg-blue-600/15 blur-[120px] rounded-full pointer-events-none" />
 
         <motion.div
           variants={containerVariants}
