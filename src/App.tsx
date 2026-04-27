@@ -1,16 +1,22 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Navbar from "./components/Navbar.tsx";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 import Home from "./pages/Home";
 
 function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-white dark:bg-gray-950 text-gray-900 dark:text-white transition-colors duration-300 font-sans">
+      <div className="flex flex-col min-h-screen bg-white dark:bg-gray-950 text-gray-900 dark:text-white transition-colors duration-300 font-sans">
         <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          {/* We will add more routes here later */}
-        </Routes>
+
+        {/* Updated from flex-grow to grow for Tailwind v4 */}
+        <main className="grow">
+          <Routes>
+            <Route path="/" element={<Home />} />
+          </Routes>
+        </main>
+
+        <Footer />
       </div>
     </Router>
   );
