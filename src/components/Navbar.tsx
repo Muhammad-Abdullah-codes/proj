@@ -1,147 +1,161 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { Moon, Sun, Menu, X } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
+import { Menu, X, Sun, Moon } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function Navbar() {
-  const [isDark, setIsDark] = useState(() => {
-    if (typeof window !== "undefined") {
-      return (
-        localStorage.getItem("theme") === "dark" ||
-        (!("theme" in localStorage) &&
-          window.matchMedia("(prefers-color-scheme: dark)").matches)
-      );
-    }
-    return true;
-  });
-
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  const location = useLocation();
 
+  // Handle Scroll Effect
   useEffect(() => {
-    const root = window.document.documentElement;
-    if (isDark) {
-      root.classList.add("dark");
-      localStorage.setItem("theme", "dark");
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Handle Global Dark Mode Toggle
+  useEffect(() => {
+    // Check if the html tag already has the dark class when navbar mounts
+    const isDark = document.documentElement.classList.contains("dark");
+    setIsDarkMode(isDark);
+  }, []);
+
+  const toggleDarkMode = () => {
+    const newDarkMode = !isDarkMode;
+    setIsDarkMode(newDarkMode);
+    if (newDarkMode) {
+      document.documentElement.classList.add("dark");
     } else {
-      root.classList.remove("dark");
-      localStorage.setItem("theme", "light");
+      document.documentElement.classList.remove("dark");
     }
-  }, [isDark]);
+  };
 
+  // Close mobile menu when route changes
   useEffect(() => {
-    document.body.style.overflow = isOpen ? "hidden" : "unset";
-    return () => {
-      document.body.style.overflow = "unset";
-    };
-  }, [isOpen]);
+    setIsOpen(false);
+  }, [location.pathname]);
 
-  // Reusable Link component for the animated underline effect
-  const NavLink = ({
-    to,
-    children,
-  }: {
-    to: string;
-    children: React.ReactNode;
-  }) => (
-    <Link
-      to={to}
-      className="relative font-medium text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors group py-2"
-    >
-      {children}
-      <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 dark:bg-blue-400 transition-all duration-300 ease-out group-hover:w-full rounded-full"></span>
-    </Link>
-  );
+  const navLinks = [
+    { name: "Home", path: "/" },
+    { name: "About", path: "/about" },
+    { name: "Services", path: "/services" },
+    { name: "Portfolio", path: "/portfolio" },
+    { name: "Insights", path: "/blog" },
+    { name: "Contact", path: "/contact" },
+  ];
 
   return (
-    <nav className="fixed w-full z-50 bg-white/85 dark:bg-gray-950/85 backdrop-blur-lg border-b border-gray-200/80 dark:border-gray-800/80 transition-colors duration-300">
-      <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between relative">
-        <Link to="/" className="text-2xl font-extrabold tracking-tight z-50">
+    <header
+      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+        scrolled
+          ? "bg-white/80 dark:bg-gray-950/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 shadow-sm py-4"
+          : "bg-transparent py-6"
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
+        {/* Logo */}
+        <Link
+          to="/"
+          className="text-2xl font-black tracking-tight text-gray-900 dark:text-white z-50 relative"
+        >
           Dev<span className="text-blue-600 dark:text-blue-500">Hub</span>.
         </Link>
 
-        <div className="hidden md:flex space-x-10 items-center">
-          <NavLink to="/">Home</NavLink>
-          <NavLink to="/services">Services</NavLink>
-          <NavLink to="/portfolio">Portfolio</NavLink>
+        {/* Desktop Navigation */}
+        <nav className="hidden lg:flex items-center gap-8">
+          {navLinks.map((link) => {
+            const isActive = location.pathname === link.path;
+            return (
+              <Link
+                key={link.name}
+                to={link.path}
+                className={`relative group text-sm font-bold transition-colors hover:text-blue-600 dark:hover:text-blue-400 ${
+                  isActive
+                    ? "text-blue-600 dark:text-blue-400"
+                    : "text-gray-600 dark:text-gray-300"
+                }`}
+              >
+                {link.name}
+                {/* The Animated Underline */}
+                <span
+                  className={`absolute -bottom-1.5 left-0 h-\[2px\] bg-blue-600 dark:bg-blue-400 transition-all duration-300 ease-out ${
+                    isActive ? "w-full" : "w-0 group-hover:w-full"
+                  }`}
+                />
+              </Link>
+            );
+          })}
+        </nav>
 
-          <div className="w-px h-6 bg-gray-300 dark:bg-gray-700 mx-2"></div>
-
+        {/* Right Side Controls (Desktop & Mobile) */}
+        <div className="flex items-center gap-4 z-50 relative">
+          {/* Dark Mode Toggle */}
           <button
-            onClick={() => setIsDark(!isDark)}
-            className="p-2 rounded-full text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all"
-            aria-label="Toggle Theme"
+            onClick={toggleDarkMode}
+            className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors shadow-sm"
+            aria-label="Toggle Dark Mode"
           >
-            {isDark ? <Sun size={18} /> : <Moon size={18} />}
+            {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
           </button>
 
+          {/* Desktop CTA */}
           <Link
             to="/book"
-            className="bg-blue-600 text-white px-6 py-2.5 rounded-lg font-semibold hover:bg-blue-700 hover:shadow-lg hover:shadow-blue-500/25 transition-all active:scale-95"
+            className="hidden lg:flex bg-blue-600 text-white px-6 py-2.5 rounded-xl text-sm font-bold hover:bg-blue-700 transition-all shadow-md shadow-blue-500/20 active:scale-95"
           >
             Book Meeting
           </Link>
-        </div>
 
-        <div className="md:hidden flex items-center gap-3 z-50">
-          <button
-            onClick={() => setIsDark(!isDark)}
-            className="p-2 text-gray-600 dark:text-gray-300"
-          >
-            {isDark ? <Sun size={20} /> : <Moon size={20} />}
-          </button>
+          {/* Mobile Menu Toggle */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="p-2 text-gray-900 dark:text-white"
+            className="lg:hidden p-2 text-gray-600 dark:text-gray-300"
+            aria-label="Toggle Menu"
           >
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
       </div>
 
+      {/* Mobile Navigation Menu */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -10 }}
+            initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
+            exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.2 }}
-            className="absolute top-20 left-0 w-full bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-800 md:hidden shadow-2xl h-[calc(100vh-5rem)] overflow-y-auto"
+            className="absolute top-full left-0 w-full bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-800 shadow-xl lg:hidden flex flex-col py-6 px-6 gap-2"
           >
-            <div className="flex flex-col px-6 py-8 space-y-2">
-              <Link
-                to="/"
-                onClick={() => setIsOpen(false)}
-                className="block px-4 py-4 text-lg font-medium rounded-xl hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors"
-              >
-                Home
-              </Link>
-              <Link
-                to="/services"
-                onClick={() => setIsOpen(false)}
-                className="block px-4 py-4 text-lg font-medium rounded-xl hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors"
-              >
-                Services
-              </Link>
-              <Link
-                to="/portfolio"
-                onClick={() => setIsOpen(false)}
-                className="block px-4 py-4 text-lg font-medium rounded-xl hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors"
-              >
-                Portfolio
-              </Link>
-              <div className="pt-6 mt-4 border-t border-gray-100 dark:border-gray-800">
+            {navLinks.map((link) => {
+              const isActive = location.pathname === link.path;
+              return (
                 <Link
-                  to="/book"
-                  onClick={() => setIsOpen(false)}
-                  className="block w-full bg-blue-600 text-white px-5 py-4 rounded-xl font-semibold text-center shadow-md active:scale-95 transition-all"
+                  key={link.name}
+                  to={link.path}
+                  className={`relative text-lg font-bold py-3 px-4 rounded-xl transition-colors ${
+                    isActive
+                      ? "bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400"
+                      : "text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-900"
+                  }`}
                 >
-                  Book a Meeting
+                  {link.name}
                 </Link>
-              </div>
-            </div>
+              );
+            })}
+
+            <Link
+              to="/book"
+              className="mt-4 w-full bg-blue-600 text-white px-6 py-4 rounded-xl text-center font-bold shadow-md active:scale-95"
+            >
+              Book a Meeting
+            </Link>
           </motion.div>
         )}
       </AnimatePresence>
-    </nav>
+    </header>
   );
 }
