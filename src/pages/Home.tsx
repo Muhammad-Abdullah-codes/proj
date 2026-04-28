@@ -1,6 +1,7 @@
 import { motion, type Variants } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import ClientLogos from "../components/ClientLogos";
 import HomeServices from "../components/HomeServices";
 import AboutSection from "../components/AboutSection";
 
@@ -83,6 +84,9 @@ export default function Home() {
           </motion.div>
         </motion.div>
       </section>
+
+      {/* Inserted the Client Logos component right below the Hero */}
+      <ClientLogos />
 
       <HomeServices />
       <AboutSection />
