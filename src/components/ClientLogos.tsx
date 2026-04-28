@@ -32,17 +32,18 @@ export default function ClientLogos() {
             transition={{
               repeat: Infinity,
               ease: "linear",
-              duration: 25, // Increase to slow down, decrease to speed up
+              duration: 25,
             }}
           >
             {duplicatedClients.map((client, idx) => (
               <div
                 key={idx}
-                // Padding right instead of gaps ensures the mathematical width matches perfectly
-                className="flex items-center gap-2 pr-12 md:pr-24 text-gray-500 dark:text-gray-400 opacity-60 grayscale hover:grayscale-0 hover:text-blue-600 dark:hover:text-blue-500 transition-all duration-300 cursor-pointer"
+                // Added shrink-0 to prevent the container from squishing
+                className="flex shrink-0 items-center gap-2 pr-12 md:pr-24 text-gray-500 dark:text-gray-400 opacity-60 grayscale hover:grayscale-0 hover:text-blue-600 dark:hover:text-blue-500 transition-all duration-300 cursor-pointer"
               >
                 {client.icon}
-                <span className="text-xl font-black tracking-tight">
+                {/* Added whitespace-nowrap to prevent the text from breaking to a second line */}
+                <span className="text-xl font-black tracking-tight whitespace-nowrap">
                   {client.name}
                 </span>
               </div>

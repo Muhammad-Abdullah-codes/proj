@@ -16,20 +16,32 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Handle Global Dark Mode Toggle
+  // Handle Global Dark Mode Toggle & Persistence
   useEffect(() => {
-    // Check if the html tag already has the dark class when navbar mounts
-    const isDark = document.documentElement.classList.contains("dark");
-    setIsDarkMode(isDark);
+    const storedTheme = localStorage.getItem("theme");
+    const systemPrefersDark = window.matchMedia(
+      "(prefers-color-scheme: dark)",
+    ).matches;
+
+    if (storedTheme === "dark" || (!storedTheme && systemPrefersDark)) {
+      document.documentElement.classList.add("dark");
+      setIsDarkMode(true);
+    } else {
+      document.documentElement.classList.remove("dark");
+      setIsDarkMode(false);
+    }
   }, []);
 
   const toggleDarkMode = () => {
     const newDarkMode = !isDarkMode;
     setIsDarkMode(newDarkMode);
+
     if (newDarkMode) {
       document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
     } else {
       document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
     }
   };
 
@@ -79,9 +91,8 @@ export default function Navbar() {
                 }`}
               >
                 {link.name}
-                {/* The Animated Underline */}
                 <span
-                  className={`absolute -bottom-1.5 left-0 h-\[2px\] bg-blue-600 dark:bg-blue-400 transition-all duration-300 ease-out ${
+                  className={`absolute -bottom-1.5 left-0 h-0.5 bg-blue-600 dark:bg-blue-400 transition-all duration-300 ease-out ${
                     isActive ? "w-full" : "w-0 group-hover:w-full"
                   }`}
                 />
@@ -128,7 +139,8 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.2 }}
-            className="absolute top-full left-0 w-full bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-800 shadow-xl lg:hidden flex flex-col py-6 px-6 gap-2"
+            // Added h-screen, overflow-y-auto, and pb-32 to make it full height and scrollable
+            className="absolute top-full left-0 w-full h-screen bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-800 shadow-xl lg:hidden flex flex-col py-6 px-6 gap-2 overflow-y-auto pb-32"
           >
             {navLinks.map((link) => {
               const isActive = location.pathname === link.path;
