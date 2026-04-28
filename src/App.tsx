@@ -22,6 +22,7 @@ import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import NotFound from "./pages/NotFound";
 import AdminDashboard from "./pages/admin/AdminDashboard";
+import AdminLogin from "./pages/admin/AdminLogin";
 
 // --- HOOKS (This fixes the usePageTitle error!) ---
 import { usePageTitle } from "./hooks/usePageTitle";
@@ -50,9 +51,17 @@ function App() {
     <Router>
       <Routes>
         <Route
-          path="/admin/*"
+          path="/admin"
           element={
-            <PageWrapper title="Admin Panel">
+            <PageWrapper title="Admin Login">
+              <AdminLogin />
+            </PageWrapper>
+          }
+        />
+        <Route
+          path="/admin/dashboard"
+          element={
+            <PageWrapper title="Admin Dashboard">
               <AdminDashboard />
             </PageWrapper>
           }
